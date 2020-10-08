@@ -55,3 +55,11 @@ def binary_search(image_list, anchor):
         positive_list.append(triplet_loss(anchor, image1, image2))
     return positive_list
     
+def hierarchical_search(image_list, anchor):
+    while len(image_list) != 1:
+        image_list = binary_search(image_list, anchor)
+    return image_list
+
+result = hierarchical_search(image_collection, input_file)
+
+print(result)
