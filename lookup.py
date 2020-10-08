@@ -2,6 +2,7 @@ import glob
 import sys
 import random
 import numpy as np
+from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import load_img
@@ -62,4 +63,9 @@ def hierarchical_search(image_list, anchor):
 
 result = hierarchical_search(image_collection, input_file)
 
-print(result)
+
+# show the results
+im1 = Image.open(input_file)
+im2 = Image.open(result[0])
+
+Image.fromarray(np.hstack((np.array(im1),np.array(im2)))).show()
