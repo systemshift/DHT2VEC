@@ -1,5 +1,6 @@
 import glob
 import sys
+import random
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
@@ -41,4 +42,16 @@ def triplet_loss(anchor, input1, input2):
     elif second_input > first_input:
         return input1
 
+def binary_search(image_list, anchor):
+    if len(image_list) % 2 != 0:
+        image_list.pop()
+    
+    positive_list = []
+
+    for i in range(0, int(len(image_list)/2), 2):
+        image1 = image_list[i]
+        image2 = image_list[i+1]
+
+        positive_list.append(triplet_loss(anchor, image1, image2))
+    return positive_list
     
