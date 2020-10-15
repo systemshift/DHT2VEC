@@ -4,6 +4,14 @@ A feature addressable distributed hash table using vectors to search for similar
 For a more detail read, check out the [blog post](https://systemshift.github.io/FAN.html)
 
 
+# Requirements
+
+```
+Tensorflow
+Numpy
+Pillow
+```
+
 # How to use
 
 Project currently in prototype stage, and what exists is the most basic implementation in a controlled environment.
@@ -28,13 +36,7 @@ python lookup.py 3311335910_36bf189ef6.jpg
 ![output](DATA/azure/3310595453_d72ccd1446.jpg)
 
 
-# Requirements
 
-```
-Tensorflow
-Numpy
-Pillow
-```
 
 # TODO
 
