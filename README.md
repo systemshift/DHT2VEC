@@ -23,7 +23,7 @@ This is an example that works, other files can still be off target.
 python lookup.py 3311335910_36bf189ef6.jpg
 ```
 
-![input](3311335910_36bf189ef6.png)
+![input](3311335910_36bf189ef6.jpg)
 
 ![output](DATA/azure/3310595453_d72ccd1446.jpg)
 
