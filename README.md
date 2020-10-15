@@ -12,6 +12,8 @@ Project currently in prototype stage, and what exists is the most basic implemen
 python lookup.py [filepath]
 ```
 
+The datalookup has `DATA`, which then has many directories as `DATA/something/`
+
 # Requirements
 
 ```
