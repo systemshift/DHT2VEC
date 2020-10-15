@@ -24,6 +24,7 @@ python lookup.py 3311335910_36bf189ef6.jpg
 ```
 
 ![input](3311335910_36bf189ef6.png)
+
 ![output](DATA/azure/3310595453_d72ccd1446.jpg)
 
 
