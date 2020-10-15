@@ -6,7 +6,7 @@ For a more detail read, check out the [blog post](https://systemshift.github.io/
 
 # How to use
 
-Project currently in prototype stage, and what exists is the most basic implementation.
+Project currently in prototype stage, and what exists is the most basic implementation in a controlled environment.
 
 ```
 python lookup.py [filepath]
@@ -19,3 +19,7 @@ Tensorflow
 Numpy
 Pillow
 ```
+
+# TODO
+
+There is no network interface right now, and DHT implementations that exist have hashing baked in. So a DHT needs to be implemented from scratch with the new primitives hardcoded in the codebase.
