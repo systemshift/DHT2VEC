@@ -38,3 +38,7 @@ python lookup.py 3311335910_36bf189ef6.jpg
 # TODO
 
 There is no network interface right now, and DHT implementations that exist have hashing baked in. So a DHT needs to be implemented from scratch with the new primitives hardcoded in the codebase.
+
+# Credit
+
+I have used a dht submodule from another [repo](https://github.com/isaaczafuta/pydht)
