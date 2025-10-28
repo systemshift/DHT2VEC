@@ -85,10 +85,11 @@ query := tera.Query{
 
 ## Project Status
 
-**Phase 1: Primitives** (Current)
-- [ ] Homomorphic hash implementation
-- [ ] Parameterized kernel functions
-- [ ] Gatekeeping logic
+**Phase 1: Primitives** (Complete ✓)
+- [x] Homomorphic hash implementation (`crypto/`)
+- [x] Parameterized kernel functions (`semantic/`)
+- [x] Gatekeeping logic (`core/`)
+- [x] Working demo (`examples/demo.go`)
 
 **Phase 2: Network** (Next)
 - [ ] libp2p integration
@@ -99,6 +100,16 @@ query := tera.Query{
 - [ ] Content discovery API
 - [ ] Interest subscription mechanism
 - [ ] IPFS integration for storage
+
+## Quick Start
+
+```bash
+# Run tests
+go test ./...
+
+# Run demo
+go run examples/demo.go
+```
 
 ## Why "Terrestrial"?
 
