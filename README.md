@@ -1,45 +1,121 @@
-# DHT2VEC
+# TERA
 
-A feature addressable distributed hash table using vectors to search for similarity across a peer-to-peer network. Returning the most similar file.
-For a more detail read, check out the [blog post](https://systemshift.github.io/FAN.html)
+**Terrestrial Extendable Retrieval & Addressing**
 
-**Note: running this on different machines has resulted in different output, likely a result of different Tensorflow versions**
+A semantic content discovery network with cryptographic integrity guarantees.
 
-# Requirements
+## What is TERA?
 
-```
-Tensorflow
-Numpy
-Pillow
-```
+TERA is a peer-to-peer network that enables similarity-based content discovery while preventing spam through cryptographic verification. Unlike traditional content-addressed networks (like IPFS) that require exact content hashes, TERA allows you to find "similar" content with provable integrity.
 
-# How to use
+## The Core Innovation
 
-Project currently in prototype stage, and what exists is the most basic implementation in a controlled environment.
+Traditional DHTs have a fundamental limitation: they can only verify exact content identity. TERA introduces a **dual-output hash function** that provides:
 
-```
-python lookup.py [filepath]
-```
+1. **H_crypto** - A homomorphic hash supporting O(1) incremental extensions
+2. **H_semantic** - Parameterized kernel-based similarity metrics
 
-The datalookup has `DATA`, which then has many directories as `DATA/something/`
+This enables **integrity-gated semantic search**: nodes can verify that content legitimately extends a root hash while filtering spam based on relevance.
 
+### Key Properties
 
-# Example
+- **Extendable**: Add content to a collection in O(1) time without recomputing the entire hash
+- **Verifiable**: Cryptographically prove that content B extends content A
+- **Spam-resistant**: Invalid extensions are automatically rejected by the network
+- **Parameterized**: Users define their own notion of "similarity" via kernel parameters
 
-This is an example that works, other files can still be off target.
+## How It Works
 
 ```
-python lookup.py 3311335910_36bf189ef6.jpg
+Traditional IPFS:
+Content → SHA-256 → Exact lookup → Retrieve
+
+TERA:
+Content → (H_crypto, H_semantic) → Similarity search + Verification → Discover
 ```
 
-![gif](demo.gif)
+**Example:**
 
+```go
+// Publish root content
+root := tera.NewContent([]byte("Initial document"))
+// H_crypto: 0xabc123..., H_semantic: [features...]
 
+// Extend with new content
+extended := root.Extend([]byte("Additional paragraph"))
+// H_crypto: 0xdef456... (= 0xabc123... + hash("Additional paragraph"))
 
-# TODO
+// Query with custom similarity parameters
+query := tera.Query{
+    Content: []byte("Looking for documents about..."),
+    Params: KernelParams{
+        WeightSemantic: 0.7,
+        WeightLexical:  0.3,
+    },
+}
 
-There is no network interface right now, and DHT implementations that exist have hashing baked in. So a DHT needs to be implemented from scratch with the new primitives hardcoded in the codebase.
+// Network forwards only if:
+// 1. H_crypto verifies (legitimate extension)
+// 2. Similarity exceeds threshold (relevant)
+```
 
-# Credit
+## Architecture
 
-I have used a dht submodule from another [repo](https://github.com/isaaczafuta/pydht)
+```
+┌─────────────────────────────────────────┐
+│ Application Layer                       │
+│ (Queries, Publications, Subscriptions)  │
+└─────────────────────────────────────────┘
+                  ↓
+┌─────────────────────────────────────────┐
+│ Gossip Protocol + Gatekeeping           │
+│ (Forward if: valid_extension ∧ similar) │
+└─────────────────────────────────────────┘
+                  ↓
+┌──────────────────┬──────────────────────┐
+│ H_crypto         │ H_semantic           │
+│ (Homomorphic)    │ (Kernel-based)       │
+│ Integrity ✓      │ Discovery ✓          │
+└──────────────────┴──────────────────────┘
+                  ↓
+┌─────────────────────────────────────────┐
+│ libp2p Transport Layer                  │
+└─────────────────────────────────────────┘
+```
+
+## Project Status
+
+**Phase 1: Primitives** (Current)
+- [ ] Homomorphic hash implementation
+- [ ] Parameterized kernel functions
+- [ ] Gatekeeping logic
+
+**Phase 2: Network** (Next)
+- [ ] libp2p integration
+- [ ] Gossip protocol
+- [ ] Basic node implementation
+
+**Phase 3: Applications**
+- [ ] Content discovery API
+- [ ] Interest subscription mechanism
+- [ ] IPFS integration for storage
+
+## Why "Terrestrial"?
+
+It's a pun. IPFS is "InterPlanetary" File System, so naturally this is the "Terrestrial" version. Supposedly inverted priorities: we're focused on Earth-based problems like spam, discovery, and semantic search rather than interplanetary data transfer.
+
+## Related Work
+
+- **IPFS**: Content-addressed storage (exact matching only)
+- **DHT2VEC** (2020): Early exploration of semantic DHTs
+- **Kademlia**: XOR-metric DHT routing (no semantic awareness)
+
+TERA combines ideas from content-addressed networks, homomorphic cryptography, and kernel methods to create something new: **semantic content addressing with integrity**.
+
+## License
+
+BSD 3-Clause License (see LICENSE file)
+
+## Contributing
+
+This project is in early development. Contributions welcome once the core primitives are stable.
