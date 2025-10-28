@@ -91,15 +91,18 @@ query := tera.Query{
 - [x] Gatekeeping logic (`core/`)
 - [x] Working demo (`examples/demo.go`)
 
-**Phase 2: Network** (Next)
-- [ ] libp2p integration
-- [ ] Gossip protocol
-- [ ] Basic node implementation
+**Phase 2: Network** (Complete ✓)
+- [x] libp2p integration (`network/`)
+- [x] Gossip protocol with pubsub
+- [x] Basic node implementation
+- [x] CLI tool (`tera-node`)
 
-**Phase 3: Applications**
+**Phase 3: Applications** (Next)
 - [ ] Content discovery API
 - [ ] Interest subscription mechanism
 - [ ] IPFS integration for storage
+- [ ] DHT for peer discovery
+- [ ] Persistent storage
 
 ## Quick Start
 
@@ -107,8 +110,25 @@ query := tera.Query{
 # Run tests
 go test ./...
 
-# Run demo
+# Run demo (local simulation)
 go run examples/demo.go
+
+# Build and run network node
+go build -o tera-node ./cmd/tera-node
+
+# Start bootstrap node
+./tera-node -port 9000 -interests "machine learning"
+
+# Start second node (in another terminal)
+# Replace <PEER-ID> with the peer ID from bootstrap node
+./tera-node -port 9001 \
+  -bootstrap "/ip4/127.0.0.1/tcp/9000/p2p/<PEER-ID>" \
+  -interests "machine learning"
+
+# In the node shell, publish content:
+> publish neural networks and deep learning algorithms
+> stats
+> peers
 ```
 
 ## Why "Terrestrial"?
