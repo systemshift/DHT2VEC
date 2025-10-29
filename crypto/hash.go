@@ -100,6 +100,12 @@ func VerifyExtension(oldHash, newHash *Hash, newElement []byte) bool {
 
 // Equal checks if two hashes are equal.
 func (h *Hash) Equal(other *Hash) bool {
+	if h == nil || other == nil {
+		return h == other
+	}
+	if h.value == nil || other.value == nil {
+		return h.value == other.value
+	}
 	return h.value.Cmp(other.value) == 0
 }
 
